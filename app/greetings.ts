@@ -1,14 +1,9 @@
 class Greeter {         //greeter= class
-greeting: string;       //greeter objects have a property called greeeting which stores a string
-
-constructor (message: string) {
-this.greeting = message;
-}
-
+constructor (public message: string) {}
 greet() {
-return "Hello, " + this.greeting;
 }
 }
+
 
 var greeters: Greeter[] = [];
 greeters.push(new Greeter("world"));
