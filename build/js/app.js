@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var ToDoList;
 (function (ToDoList) {
-    var Task = /** @class */ (function () {
+    var Task = (function () {
         function Task(description, priority, assignedTo) {
             this.description = description;
             this.priority = priority;
@@ -23,7 +23,7 @@ var ToDoList;
         return Task;
     }());
     ToDoList.Task = Task;
-    var HomeTask = /** @class */ (function (_super) {
+    var HomeTask = (function (_super) {
         __extends(HomeTask, _super);
         function HomeTask(description, priority, assignedTo) {
             var _this = _super.call(this, description, priority) || this;
@@ -35,7 +35,7 @@ var ToDoList;
         return HomeTask;
     }(Task));
     ToDoList.HomeTask = HomeTask;
-    var WorkTask = /** @class */ (function (_super) {
+    var WorkTask = (function (_super) {
         __extends(WorkTask, _super);
         function WorkTask(dueDate, description, priority, assignedTo) {
             var _this = _super.call(this, description, priority, assignedTo) || this;
@@ -48,7 +48,7 @@ var ToDoList;
         return WorkTask;
     }(Task));
     ToDoList.WorkTask = WorkTask;
-    var HobbyTask = /** @class */ (function (_super) {
+    var HobbyTask = (function (_super) {
         __extends(HobbyTask, _super);
         function HobbyTask(description) {
             var _this = _super.call(this, description, "low") || this;
@@ -82,12 +82,28 @@ var ToDoList;
     };
 })(ToDoList || (ToDoList = {}));
 /// <reference path="to-do-classes-interface.ts" />
+var ToDoList;
+(function (ToDoList) {
+    ToDoList.describeTasksForPerson = function (assignee, taskCollection) {
+        var descriptions = [];
+        for (var _i = 0, taskCollection_1 = taskCollection; _i < taskCollection_1.length; _i++) {
+            var task = taskCollection_1[_i];
+            if (task.assignedTo === assignee) {
+                descriptions.push(task.description);
+            }
+        }
+        return descriptions;
+    };
+})(ToDoList || (ToDoList = {}));
+/// <reference path="to-do-classes-interface.ts" />
 /// <reference path="to-do-people.ts" />
+/// <reference path="to-do-listing-functions.ts" />
 var people = ToDoList.people;
 var tasks = [];
 tasks.push(new ToDoList.HomeTask("Do the dishes.", "High"));
 tasks.push(new ToDoList.HomeTask("Buy chocolate.", "Low", people.diane));
 tasks.push(new ToDoList.HomeTask("Wash the laundry.", "High"));
+tasks[0].markDone();
 tasks.push(new ToDoList.HobbyTask("Practice origami."));
 tasks.push(new ToDoList.HobbyTask("Bake a pie."));
 var today = new Date();
@@ -97,5 +113,13 @@ var nextDay = new Date();
 nextDay.setDate(today.getDate() + 2);
 tasks.push(new ToDoList.WorkTask(today, "Update blog.", "High", people.diane));
 tasks.push(new ToDoList.WorkTask(tomorrow, "Go to meeting.", "Medium", people.thor));
+tasks.push(new ToDoList.WorkTask(tomorrow, "Save the world.", "High", people.thor));
+tasks.push(new ToDoList.WorkTask(tomorrow, "Buy a new shirt.", "Low", people.thor));
 tasks.push(new ToDoList.WorkTask(nextDay, "Clean ceiling.", "Low", people.loki));
 console.log(tasks);
+var thorTasks = ToDoList.describeTasksForPerson(people.thor, tasks);
+console.log("Here are Thor's tasks: ");
+for (var _i = 0, thorTasks_1 = thorTasks; _i < thorTasks_1.length; _i++) {
+    var task = thorTasks_1[_i];
+    console.log(task);
+}
